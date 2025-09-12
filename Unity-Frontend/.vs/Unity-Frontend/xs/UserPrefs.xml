@@ -1,13 +1,18 @@
 ﻿<Properties StartupConfiguration="{EF0BDA83-B551-D06B-7637-2EB60B8DFE46}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/NPCManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PresentationTimer.cs">
     <Files>
-      <File FileName="Assets/Scripts/PresentationManager.cs" Line="8" Column="79" />
+      <File FileName="Assets/Scripts/PresentationManager.cs" Line="16" Column="45" />
       <File FileName="Assets/Scripts/ImageLoader.cs" Line="55" Column="1" />
       <File FileName="Assets/Scripts/HashcodeManager.cs" Line="41" Column="1" />
-      <File FileName="Assets/Scripts/ProgramManager.cs" Line="153" Column="1" />
+      <File FileName="Assets/Scripts/ProgramManager.cs" Line="130" Column="18" />
       <File FileName="Assets/Scripts/SimpleJSON.cs" Line="1434" Column="2" />
-      <File FileName="Assets/Scripts/NPCController.cs" Line="61" Column="1" />
-      <File FileName="Assets/Scripts/NPCManager.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/NPCController.cs" Line="31" Column="32" />
+      <File FileName="Assets/Scripts/NPCManager.cs" Line="14" Column="69" />
+      <File FileName="Assets/Scripts/AudioRecorder.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/QADataManager.cs" Line="18" Column="13" />
+      <File FileName="Assets/Scripts/SavWav.cs" Line="42" Column="1" />
+      <File FileName="Assets/Scripts/WavUtility.cs" Line="26" Column="39" />
+      <File FileName="Assets/Scripts/PresentationTimer.cs" Line="43" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +20,7 @@
           <Node name="Unity-Frontend" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="NPCManager.cs" selected="True" />
+                <Node name="PresentationTimer.cs" selected="True" />
               </Node>
             </Node>
           </Node>
