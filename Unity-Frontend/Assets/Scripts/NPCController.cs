@@ -19,8 +19,7 @@ public class NPCController : MonoBehaviour
     private enum State { Idle, WaitingForAsk, QuestionAsked, Recording }
     private State currentState = State.Idle;
 
-    [Header("API")]
-    public string elevenLabsApiKey = "YOUR_ELEVENLABS_API_KEY";
+    private string elevenLabsApiKey => SecretsManager.Instance.keys.elevenLabsApiKey;
 
     private void Start()
     {

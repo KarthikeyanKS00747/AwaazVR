@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text;
-using TMPro;
 
 public class PresentationManager : MonoBehaviour
 {
@@ -12,9 +12,7 @@ public class PresentationManager : MonoBehaviour
     public ProgramManager programManager;
     public NPCManager npcManager;
     public Image slideImage;
-
-    [Header("UI")]
-    public TextMeshProUGUI reportText; // 👈 Assign in Inspector
+    public TMP_Text reportCodeText; // 👈 TMP field to display the code
 
     [Header("Backend API")]
     public string reportApiUrl = "https://awaazbackend.onrender.com/api/generate-report";
@@ -24,23 +22,19 @@ public class PresentationManager : MonoBehaviour
     public void ShowSlide(int index)
     {
         if (programManager == null || programManager.slideSprites == null || programManager.slideSprites.Length == 0)
-        {
-            Debug.LogWarning("⚠️ No slides available to show.");
             return;
-        }
 
         if (index >= 0 && index < programManager.slideSprites.Length)
         {
             currentSlide = index;
             if (slideImage != null)
                 slideImage.sprite = programManager.slideSprites[currentSlide];
-
-            Debug.Log($"📑 Showing slide {currentSlide + 1}/{programManager.slideSprites.Length}");
         }
     }
 
-    public void NextSlide() => ShowSlide((currentSlide + 1) % programManager.slideSprites.Length);
-    public void PreviousSlide() => ShowSlide((currentSlide - 1 + programManager.slideSprites.Length) % programManager.slideSprites.Length);
+    public void NextSlide() => ShowSlide(currentSlide + 1);
+
+    public void PreviousSlide() => ShowSlide(currentSlide - 1);
 
     public void StopPresentation()
     {
@@ -84,12 +78,15 @@ public class PresentationManager : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                string response = www.downloadHandler.text;
-                Debug.Log("✅ Report sent successfully: " + response);
+                Debug.Log("✅ Report sent successfully: " + www.downloadHandler.text);
 
-                // 👉 Display report in TextMeshPro
-                if (reportText != null)
-                    reportText.text = $"<b>Generated Report:</b>\n\n{response}";
+                // Deserialize only the needed part
+                ReportResponseBackend response = JsonUtility.FromJson<ReportResponseBackend>(www.downloadHandler.text);
+
+                if (reportCodeText != null && response != null)
+                {
+                    reportCodeText.text = $"Report Code: {response.generatedAt}";
+                }
 
                 QADataManager.Instance?.ClearQAs();
             }
@@ -97,9 +94,6 @@ public class PresentationManager : MonoBehaviour
             {
                 Debug.LogError("❌ Failed to send report: " + www.error);
                 Debug.LogError("Response: " + www.downloadHandler.text);
-
-                if (reportText != null)
-                    reportText.text = $"<color=red>❌ Failed to generate report.</color>\n{www.downloadHandler.text}";
             }
         }
     }
@@ -117,4 +111,10 @@ public class ReportRequestBackend
 {
     public string title;
     public QAPairBackend[] qaPairs;
+}
+
+[System.Serializable]
+public class ReportResponseBackend
+{
+    public string generatedAt; // 👈 only parse this field
 }

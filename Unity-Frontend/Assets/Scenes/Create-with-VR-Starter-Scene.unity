@@ -1342,16 +1342,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190671094}
-  m_LocalRotation: {x: -0.18301266, y: 0.6830127, z: -0.18301266, w: 0.6830127}
-  m_LocalPosition: {x: 0, y: 0, z: -771}
+  m_LocalRotation: {x: -0.24459656, y: 0.31579024, z: -0.08461572, w: 0.9128468}
+  m_LocalPosition: {x: 0, y: 0, z: -692}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1521947302}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -30}
+  m_LocalEulerAnglesHint: {x: -23.149, y: 42.224, z: -19.634}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1940, y: 65}
+  m_AnchoredPosition: {x: 1633, y: -75}
   m_SizeDelta: {x: 1141.7, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &190671096
@@ -1374,7 +1374,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Generated Report Code
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1408,8 +1408,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -6341,7 +6341,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11342,7 +11342,7 @@ MonoBehaviour:
   programManager: {fileID: 213700149}
   npcManager: {fileID: 604192253}
   slideImage: {fileID: 88262005}
-  reportText: {fileID: 190671096}
+  reportCodeText: {fileID: 190671096}
   reportApiUrl: https://awaazbackend.onrender.com/api/generate-report
 --- !u!4 &1310485649
 Transform:
