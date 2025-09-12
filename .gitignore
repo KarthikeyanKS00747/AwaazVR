@@ -30,3 +30,6 @@ UserSettings/
 *.aab
 *.unitypackage
 
+# API keys / secrets
+*.secret.json
+

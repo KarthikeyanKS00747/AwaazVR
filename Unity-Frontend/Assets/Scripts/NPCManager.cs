@@ -1,40 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCManager : MonoBehaviour
 {
-    [Header("NPCs in Scene")]
-    public List<NPCController> npcs;
+    [Header("Session Control")]
+    public bool isSessionActive = false;
 
-    [Header("Presentation Questions")]
-    public string[] questions; // questions in presentation order
+    private string[] questions;
+    private int currentIndex = 0;
 
-    private int currentQuestionIndex = 0;
+    [Header("References")]
+    public NPCController npcController;
 
-    /// <summary>
-    /// Called by ProgramManager after API call succeeds
-    /// </summary>
-    public void StartQuestions(string[] orderedQuestions)
+    public void LoadQuestions(string[] qns) => questions = qns;
+
+    public void StartSession()
     {
-        if (orderedQuestions.Length > 0 && npcs.Count > 0)
+        if (questions == null || questions.Length == 0)
         {
-            questions = orderedQuestions;
-            currentQuestionIndex = 0;
-            TriggerNextNPC();
+            Debug.LogWarning("⚠️ No questions loaded.");
+            return;
         }
+
+        if (npcController == null)
+        {
+            npcController = FindObjectOfType<NPCController>();
+            if (npcController == null)
+            {
+                Debug.LogError("❌ NPCController not assigned or found!");
+                return;
+            }
+        }
+
+        isSessionActive = true;
+        currentIndex = 0;
+        QADataManager.Instance?.ClearQAs();
+
+        TriggerNextQuestion();
     }
 
-    /// <summary>
-    /// Triggers the next NPC in sequence
-    /// </summary>
-    public void TriggerNextNPC()
+    public void StopSession()
     {
-        if (currentQuestionIndex >= questions.Length) return;
+        isSessionActive = false;
+        Debug.Log("⏹ Session stopped. Q&A session ended.");
+    }
 
-        int npcIndex = currentQuestionIndex % npcs.Count; // rotate NPCs if fewer NPCs than questions
-        npcs[npcIndex].TriggerQuestion(questions[currentQuestionIndex]);
+    public void StartQuestions(string[] qns)
+    {
+        LoadQuestions(qns);
+        StartSession();
+    }
 
-        currentQuestionIndex++;
+    public void TriggerNextQuestion()
+    {
+        if (!isSessionActive || currentIndex >= questions.Length)
+        {
+            StopSession();
+            return;
+        }
+
+        string question = questions[currentIndex];
+        currentIndex++;
+
+        Debug.Log($"🤖 Triggering NPC question: {question}");
+        npcController.TriggerQuestion(question);
     }
 }

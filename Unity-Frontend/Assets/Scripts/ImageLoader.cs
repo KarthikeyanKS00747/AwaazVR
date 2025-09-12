@@ -6,49 +6,38 @@ public class ImageLoader : MonoBehaviour
 {
     public IEnumerator LoadImages(string[] urls, ProgramManager manager)
     {
-        manager.slideSprites = new Sprite[urls.Length]; // Allocate array
+        manager.slideSprites = new Sprite[urls.Length];
 
         for (int i = 0; i < urls.Length; i++)
         {
             string url = urls[i];
-            if (string.IsNullOrEmpty(url))
-            {
-                Debug.LogWarning($"⚠️ Empty URL for slide {i + 1}");
-                continue;
-            }
+            if (string.IsNullOrEmpty(url)) continue;
 
             using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
             {
                 yield return www.SendWebRequest();
 
-                if (www.result != UnityWebRequest.Result.Success)
+                if (www.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.LogError($"❌ Failed to load image {i + 1}: {www.error}");
+                    Texture2D tex = DownloadHandlerTexture.GetContent(www);
+                    Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+                    manager.slideSprites[i] = sprite;
+                    Debug.Log($"✅ Loaded slide {i + 1}");
                 }
                 else
                 {
-                    Texture2D texture = DownloadHandlerTexture.GetContent(www);
-
-                    // Convert to Sprite
-                    Sprite sprite = Sprite.Create(
-                        texture,
-                        new Rect(0, 0, texture.width, texture.height),
-                        new Vector2(0.5f, 0.5f)
-                    );
-
-                    manager.slideSprites[i] = sprite; // ✅ Store in ProgramManager
-                    Debug.Log($"✅ Loaded slide {i + 1} from {url}");
+                    Debug.LogError($"❌ Failed to load slide {i + 1}: {www.error}");
                 }
             }
         }
 
-        Debug.Log("🎉 All slides loaded!");
-
-        // 🔹 Notify PresentationManager to show the first slide
+        // Automatically show first slide after all sprites loaded
         PresentationManager pm = FindObjectOfType<PresentationManager>();
         if (pm != null)
         {
-            pm.ShowSlide(0); // automatically show first slide
+            pm.ShowSlide(0);
         }
+
+        Debug.Log("🎉 All slides loaded!");
     }
 }
